@@ -32,7 +32,7 @@ Plugin 'chiel92/vim-autoformat'
 "Plugin 'octol/vim-cpp-enhanced-highlight'
 
 "Plugin 'flazz/vim-colorschemes'
-Plugin 'dracula/vim'
+"Plugin 'dracula/vim'
 Plugin 'mhartington/oceanic-next'
 
 "######################################
