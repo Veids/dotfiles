@@ -7,10 +7,11 @@ call vundle#begin()
 "########## Config section ############
 
 set t_Co=256
-set number
+set relativenumber
 let g:airline_powerline_fonts = 1
 let g:indentLine_color_term = 239
 syntax on
+nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 
 "######################################
 
