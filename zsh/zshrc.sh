@@ -1,5 +1,5 @@
 # Antigen config
-source /usr/share/zsh-antigen/antigen.zsh 
+source ~/.antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -20,5 +20,5 @@ antigen bundle zsh-users/zsh-autosuggestions
 #antigen theme trapd00r 
 antigen theme gnzh
 #antigen theme bureau
-# Tell Antigen that you're done.
+## Tell Antigen that you're done.
 antigen apply

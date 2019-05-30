@@ -13,6 +13,12 @@ let g:indentLine_color_term = 239
 syntax on
 nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 
+augroup AutoSaveFolds
+	autocmd!
+	autocmd BufWinLeave * mkview
+	autocmd BufWinEnter * silent loadview
+augroup END
+
 "######################################
 
 Plugin 'VundleVim/Vundle.vim'
