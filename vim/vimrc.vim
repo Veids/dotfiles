@@ -36,11 +36,13 @@ map <C-n> :NERDTreeToggle<CR>
 
 Plugin 'yggdroot/indentline'
 Plugin 'chiel92/vim-autoformat'
-"Plugin 'octol/vim-cpp-enhanced-highlight'
+" Plugin 'octol/vim-cpp-enhanced-highlight'
 
-"Plugin 'flazz/vim-colorschemes'
-"Plugin 'dracula/vim'
 Plugin 'mhartington/oceanic-next'
+
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
+Plugin 'christoomey/vim-sort-motion'
 
 "######################################
 
