@@ -15,8 +15,8 @@ nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 
 augroup AutoSaveFolds
 	autocmd!
-	autocmd BufWinLeave * mkview
-	autocmd BufWinEnter * silent loadview
+	autocmd BufWinLeave ?* mkview
+	autocmd BufWinEnter ?* silent loadview
 augroup END
 
 "######################################
@@ -39,6 +39,7 @@ Plugin 'chiel92/vim-autoformat'
 " Plugin 'octol/vim-cpp-enhanced-highlight'
 
 Plugin 'mhartington/oceanic-next'
+Plugin 'chriskempson/base16-vim'
 
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
@@ -47,5 +48,5 @@ Plugin 'christoomey/vim-sort-motion'
 "######################################
 
 call vundle#end()
-colorscheme OceanicNext
+colorscheme delek
 filetype plugin indent on 
