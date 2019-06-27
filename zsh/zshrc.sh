@@ -2,6 +2,7 @@
 source ~/.antigen.zsh
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
+export TZ='Asia/Yekaterinburg'
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
