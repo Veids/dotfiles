@@ -8,6 +8,8 @@ set relativenumber
 set cursorline
 set encoding=UTF-8
 set softtabstop=2
+set splitbelow
+set splitright
 " set termguicolors 
 let g:airline_powerline_fonts = 1
 let g:indentLine_color_term = 239
@@ -22,15 +24,15 @@ augroup end
 "########## Plugin bindings ###########
 "
 nnoremap <leader>s :ToggleWorkspace<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 nmap ; :Buffers<CR>
 nmap <F8> :TagbarToggle<CR>
 nmap ga <Plug>(EasyAlign)
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <C-l> <Plug>(ale_next_wrap)
 xmap ga <Plug>(EasyAlign)
 map <C-n> :NERDTreeToggle<CR>
+nnoremap <tab> <c-w>
+nnoremap <tab><tab> <c-w><c-w>
 
 "########### Plugin config ############
 
@@ -77,7 +79,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
-Plug 'terryma/vim-smooth-scroll'
 
 "######################################
 "############### Colors ###############
