@@ -27,8 +27,8 @@ nnoremap <leader>s :ToggleWorkspace<CR>
 nmap ; :Buffers<CR>
 nmap <F8> :TagbarToggle<CR>
 nmap ga <Plug>(EasyAlign)
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-l> <Plug>(ale_next_wrap)
+" nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+" nmap <silent> <C-l> <Plug>(ale_next_wrap)
 xmap ga <Plug>(EasyAlign)
 map <C-n> :NERDTreeToggle<CR>
 nnoremap <tab> <c-w>
@@ -44,17 +44,18 @@ let g:UltiSnipsExpandTrigger="<c-b>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:ale_python_mypy_auto_pipenv = 1
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\}
-let g:ale_linters = {
-\   'python': ['mypy']
-\}
+" let g:ale_fixers = {
+" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+" \}
+" let g:ale_linters = {
+" \   'python': ['mypy']
+" \}
 
 "######################################
 "########## Plugin section ############
 
-Plug 'valloric/youcompleteme', {'do': 'python3 ./install.py'}
+" Plug 'valloric/youcompleteme', {'do': 'python3 ./install.py'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree'
 Plug 'yggdroot/indentline'
 Plug 'chiel92/vim-autoformat'
@@ -74,7 +75,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'sheerun/vim-polyglot'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
