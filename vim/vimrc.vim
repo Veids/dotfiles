@@ -1,4 +1,4 @@
-set shell=/bin/zsh
+set shell=/usr/bin/zsh
 call plug#begin('~/.local/share/nvim/plugged')
 
 "########## Config section ############
@@ -8,9 +8,11 @@ set relativenumber
 set cursorline
 set encoding=UTF-8
 set softtabstop=2
+set shiftwidth=2
+set expandtab
 set splitbelow
 set splitright
-" set termguicolors 
+set termguicolors
 let g:airline_powerline_fonts = 1
 let g:indentLine_color_term = 239
 syntax on
@@ -22,39 +24,33 @@ augroup AutoSaveFolds
 augroup end
 
 "########## Plugin bindings ###########
-"
+
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-buffer-line)
+
 nnoremap <leader>s :ToggleWorkspace<CR>
+nnoremap <silent> <leader>o :FZF<CR>
+" nnoremap <silent> <leader>h :History<CR>
+nnoremap <tab> <c-w>
+nnoremap <tab><tab> <c-w><c-w>
 nmap ; :Buffers<CR>
 nmap <F8> :TagbarToggle<CR>
 nmap ga <Plug>(EasyAlign)
-" nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-" nmap <silent> <C-l> <Plug>(ale_next_wrap)
-xmap ga <Plug>(EasyAlign)
 map <C-n> :NERDTreeToggle<CR>
-nnoremap <tab> <c-w>
-nnoremap <tab><tab> <c-w><c-w>
 
 "########### Plugin config ############
 
 let g:tagbar_autofocus = 1
 let g:tagbar_autoclose = 1
-let g:workspace_session_directory = $HOME . '/.local/share/nvim/sessions/'
+let g:workspace_session_directory = $HOME.'/.local/share/nvim/sessions/'
 let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsExpandTrigger="<c-b>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-" let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:ale_python_mypy_auto_pipenv = 1
-" let g:ale_fixers = {
-" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-" \}
-" let g:ale_linters = {
-" \   'python': ['mypy']
-" \}
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips", $HOME."/.local/share/nvim/snippets"]
 
 "######################################
 "########## Plugin section ############
 
-" Plug 'valloric/youcompleteme', {'do': 'python3 ./install.py'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree'
 Plug 'yggdroot/indentline'
@@ -75,7 +71,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'sheerun/vim-polyglot'
-" Plug 'w0rp/ale'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
@@ -84,11 +79,8 @@ Plug 'tpope/vim-sleuth'
 "######################################
 "############### Colors ###############
 
-" Plug 'rafi/awesome-vim-colorschemes'
-" Plug 'neutaaaaan/blaaark'
-" Plug 'chase/focuspoint-vim'
+" Plug 'mhartington/oceanic-next' 
 " Plug 'aonemd/kuroi.vim'
-Plug 'mhartington/oceanic-next' 
 Plug 'BarretRen/vim-colorscheme'
 
 Plug 'vim-airline/vim-airline'
@@ -98,4 +90,5 @@ let g:airline_theme='deus'
 "######################################
 
 call plug#end()
-colorscheme monokai
+colorscheme PaperColor
+" colorscheme kuroi
