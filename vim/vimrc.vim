@@ -4,7 +4,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 "########## Config section ############
 
 set t_Co=256
-set relativenumber
+set number relativenumber
 set cursorline
 set encoding=UTF-8
 set softtabstop=2
