@@ -47,6 +47,12 @@ let g:workspace_session_directory = $HOME.'/.local/share/nvim/sessions/'
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips", $HOME."/.local/share/nvim/snippets"]
+let g:floaterm_keymap_new  = '<leader>t'
+" let g:floaterm_keymap_toggle = '<leader><tab>'
+" let g:floaterm_keymap_prev   = '<leader>tp'
+" let g:floaterm_keymap_next   = '<leader>tn'
+let g:floaterm_position = "center"
+let g:floaterm_winblend = 12
 
 "######################################
 "########## Plugin section ############
@@ -75,6 +81,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
+Plug 'voldikss/vim-floaterm'
 
 "######################################
 "############### Colors ###############
