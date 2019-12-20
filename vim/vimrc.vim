@@ -4,6 +4,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 "########## Config section ############
 
 set t_Co=256
+set laststatus=2
 set number relativenumber
 set cursorline
 set encoding=UTF-8
@@ -86,9 +87,10 @@ Plug 'voldikss/vim-floaterm'
 "######################################
 "############### Colors ###############
 
-" Plug 'mhartington/oceanic-next' 
+" Plug 'mhartington/oceanic-next'
 " Plug 'aonemd/kuroi.vim'
 Plug 'BarretRen/vim-colorscheme'
+Plug 'NLKNguyen/papercolor-theme'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
