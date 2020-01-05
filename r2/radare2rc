@@ -1,0 +1,30 @@
+# SCR CONF
+
+e scr.color=3
+e scr.color.grep=true
+e scr.color.pipe=true
+e scr.utf8=true
+e scr.utf8.curvy=true
+
+# ASM CONF
+
+e asm.symbol=true
+e asm.symbol.col=20
+e asm.ucase=true
+e asm.var=true
+e asm.var.access=true
+e asm.relsub=true
+
+# CFG CONF
+
+e cfg.editor=nvim
+e cfg.fortunes.type=tips,fun,nsfw,creepy
+e cfg.newtab=true
+
+# IO CONF
+
+e io.cache=true
+
+# THEME
+
+eco defragger
