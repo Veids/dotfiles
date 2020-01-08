@@ -1,0 +1,10 @@
+source ~/src/git/gef/gef.py
+source ~/src/git/Pwngdb/pwngdb.py
+source ~/src/git/Pwngdb/angelheap/gdbinit.py
+
+define hook-run
+python
+import angelheap
+angelheap.init_angelheap()
+end
+end

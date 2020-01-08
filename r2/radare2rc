@@ -3,6 +3,8 @@
 e scr.color=3
 e scr.color.grep=true
 e scr.color.pipe=true
+e scr.prompt.popup=true
+e scr.prompt.sect=true
 e scr.utf8=true
 e scr.utf8.curvy=true
 
