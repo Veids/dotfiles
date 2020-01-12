@@ -19,13 +19,9 @@ e asm.relsub=true
 
 # CFG CONF
 
-e cfg.editor=nvim
+e cfg.editor=vim
 e cfg.fortunes.type=tips,fun,nsfw,creepy
 e cfg.newtab=true
-
-# IO CONF
-
-e io.cache=true
 
 # THEME
 
