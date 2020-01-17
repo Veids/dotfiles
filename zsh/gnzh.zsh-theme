@@ -1,4 +1,77 @@
 # Based on bira theme
+function preexec() {
+  timer=$(date +%s)
+}
+
+function _get_runtime() {
+  if [ $timer ]; then
+    local elapsed=$(($(date +%s) - $timer))
+    local minutes=$(($elapsed / 60))
+    local sub_seconds=$(($elapsed % 60))
+    if [ $minutes -gt 0 ]; then
+      local cmd_runtime=$(printf "%dm%ds" $minutes $sub_seconds)
+    elif [ $elapsed -gt 0 ]; then
+      local cmd_runtime=$elapsed's'
+    fi
+    unset timer
+    if [ $cmd_runtime ]; then
+      echo "[$cmd_runtime]"
+    fi
+  fi
+}
+
+function git_time_since_commit() {
+  if last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null); then
+      now=`date +%s`
+      seconds_since_last_commit=$((now-last_commit))
+
+      # Totals
+      MINUTES=$((seconds_since_last_commit / 60))
+      HOURS=$((seconds_since_last_commit/3600))
+
+      # Sub-hours and sub-minutes
+      DAYS=$((seconds_since_last_commit / 86400))
+      SUB_HOURS=$((HOURS % 24))
+      SUB_MINUTES=$((MINUTES % 60))
+
+      if [[ -n $(git status -s 2> /dev/null) ]]; then
+          if [ "$MINUTES" -gt 30 ]; then
+              COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG"
+          elif [ "$MINUTES" -gt 10 ]; then
+              COLOR="$ZSH_THEME_GIT_TIME_SHORT_COMMIT_MEDIUM"
+          else
+              COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT"
+          fi
+      else
+          COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL"
+      fi
+      
+      if [ "$DAYS" -gt 30 ]; then
+          echo "[$COLOR${DAYS}d%{$reset_color%}]"
+      elif [ "$HOURS" -gt 24 ]; then
+          echo "[$COLOR${DAYS}d${SUB_HOURS}h%{$reset_color%}]"
+      elif [ "$MINUTES" -gt 60 ]; then
+          echo "[$COLOR${HOURS}h${SUB_MINUTES}m%{$reset_color%}]"
+      else
+          echo "[$COLOR${MINUTES}m%{$reset_color%}]"
+      fi
+  fi
+}
+
+function get_nvim_workspace() {
+  local session_path=$HOME'/.local/share/nvim/sessions/'
+  local pwd="$(pwd | tr / %)"
+  if [ -f "${session_path}${pwd}" ]; then
+    echo "%{$fg_bold[cyan]%}NVIM%{$reset_color%}%"
+  fi
+}
+
+function get_virtual_env() {
+  # Handle python env
+  [ $VIRTUAL_ENV ] && echo "(%{$fg_bold[cyan]%}"$(basename $VIRTUAL_ENV)"%{$reset_color%}%)─"
+}
+
+function 
 
 setopt prompt_subst
 
@@ -30,53 +103,14 @@ function _vi_status() {
   fi
 }
 
-# Determine the time since last commit. If branch is clean,
-# use a neutral color, otherwise colors will vary according to time.
-function _git_time_since_commit() {
-# Only proceed if there is actually a commit.
-  if last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null); then
-    now=$(date +%s)
-    seconds_since_last_commit=$((now-last_commit))
-
-    # Totals
-    minutes=$((seconds_since_last_commit / 60))
-    hours=$((seconds_since_last_commit/3600))
-
-    # Sub-hours and sub-minutes
-    days=$((seconds_since_last_commit / 86400))
-    sub_hours=$((hours % 24))
-    sub_minutes=$((minutes % 60))
-
-    if [ $hours -ge 24 ]; then
-      commit_age="${days}d"
-    elif [ $minutes -gt 60 ]; then
-      commit_age="${sub_hours}h${sub_minutes}m"
-    else
-      commit_age="${minutes}m"
-    fi
-
-    color=$ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL
-    echo "$color$commit_age%{$reset_color%}"
-  fi
-}
-
 local return_code="%(?..%F{red}%? ↵%f)"
-
 local user_host="${PR_USER}%F{cyan}@${PR_HOST}"
 local current_dir="%B%F{blue}%~%f%b"
-local rvm_ruby=''
-if ${HOME}/.rvm/bin/rvm-prompt &> /dev/null; then # detect user-local rvm installation
-  rvm_ruby='%F{red}‹$(${HOME}/.rvm/bin/rvm-prompt i v g s)›%f'
-elif which rvm-prompt &> /dev/null; then # detect system-wide rvm installation
-  rvm_ruby='%F{red}‹$(rvm-prompt i v g s)›%f'
-elif which rbenv &> /dev/null; then # detect Simple Ruby Version Management
-  rvm_ruby='%F{red}‹$(rbenv version | sed -e "s/ (set.*$//")›%f'
-fi
 local git_branch='$(git_prompt_info)'
 
-PROMPT="╭─${user_host} ${current_dir} ${rvm_ruby} ${git_branch}
-╰─$PR_PROMPT "
-RPROMPT='$(_vi_status)%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_status) ${_return_status}%{$(echotc DO 1)%}'
+PROMPT="╭─${user_host} ${current_dir} \$(get_nvim_workspace) ${git_branch}
+╰─\$(get_virtual_env)$PR_PROMPT "
+RPROMPT='$(_get_runtime)$(_vi_status)$(git_time_since_commit) $(git_prompt_status) ${return_code}'
 
 #ZSH_THEME_GIT_PROMPT_PREFIX="%F{yellow}‹"
 #ZSH_THEME_GIT_PROMPT_SUFFIX="› %f"
