@@ -3,6 +3,24 @@ function preexec() {
   timer=$(date +%s)
 }
 
+function precmd() {
+  if [ $timer ]; then
+    unset cmd_runtime
+    local elapsed=$(($(date +%s) - $timer))
+    local minutes=$(($elapsed / 60))
+    local sub_seconds=$(($elapsed % 60))
+    if [ $minutes -gt 0 ]; then
+      cmd_runtime=$(printf "%dm%ds" $minutes $sub_seconds)
+    elif [ $elapsed -gt 0 ]; then
+      cmd_runtime=$elapsed's'
+    fi
+    unset timer
+    if [ $cmd_runtime ]; then
+      cmd_runtime="[ $cmd_runtime ⏳]"
+    fi
+  fi
+}
+
 function
 setopt prompt_subst
 () {
@@ -46,23 +64,6 @@ setopt prompt_subst
   }
 
   # Status functions
-  function get_runtime() {
-    if [ $timer ]; then
-      local elapsed=$(($(date +%s) - $timer))
-      local minutes=$(($elapsed / 60))
-      local sub_seconds=$(($elapsed % 60))
-      if [ $minutes -gt 0 ]; then
-        local cmd_runtime=$(printf "%dm%ds" $minutes $sub_seconds)
-      elif [ $elapsed -gt 0 ]; then
-        local cmd_runtime=$elapsed's'
-      fi
-      unset timer
-      if [ $cmd_runtime ]; then
-        echo "[ $cmd_runtime \U23F3]"
-      fi
-    fi
-  }
-
   function git_time_since_commit() {
     if last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null); then
         now=`date +%s`
@@ -153,7 +154,7 @@ setopt prompt_subst
   local lrprompt=("\$(get_nvim_workspace)")
   local rprompt_build=(
     "\$(prefix left $lrprompt)"
-    "\$(get_runtime)"
+    "\${cmd_runtime}"
     # "\$(vi_status)"
     "${jobs}"
     "\$(prefix right $lrprompt)"
