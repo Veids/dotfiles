@@ -25,42 +25,42 @@ function
 setopt prompt_subst
 () {
   # Supplementary functions
-  function eval_len() {
-    eval __res=$1
-    if [ $__res ]; then
-      echo $(expr length $__res)
-      unset $__res
-    fi
-  }
-
   function eval_len_array() {
     local full=0
+    _res=()
+
+    local idx=0
     for x in $1; do
-      local len=$(eval_len $x)
-      full=$(($full+$len))
+      eval res=$x
+      _res+=("$res")
+      idx+=1
+      if [ $res ]; then
+        full+=$(expr length $_res[$idx])
+      fi
     done
-    echo $full
+    echo $_res
+    return $full
   }
 
-  function prefix(){
+  function rprompt_builder() {
     function left()  echo "%{$(echotc LEFT $1)%}"
     function right() echo "%{$(echotc RIGHT $1)%}"
 
-    local len=$(eval_len_array $2)
-    if [ $1 = 'left' ]; then
-      # local res="${up}"
-      if [ $len -gt 0 ]; then
-        local res="$res$(right $len)"
-      fi
-      echo "%{$(echotc UP 1)%}$res"
+    build="%{$(echotc UP 1)%}"
+    res=$(eval_len_array $r2prompt)
+    len=$?
+    eval __tmp=$r1prompt
+    if [ $len -gt 0 ]; then
+      build+="$(right $len)"
+      build+=$__tmp
+      build+="$(left $len)"
+      build+="%{$(echotc DOWN 1)%}"
+      build+="%F{cyan}$res%f"
     else
-      local res=""
-      if [ $len -gt 0 ]; then
-        local res="$res$(left $len)"
-      fi
-      echo "$res%{$(echotc DOWN 1)%}"
-      # echo "$res${down}"
+      build+=$__tmp
+      build+="%{$(echotc DOWN 1)%}"
     fi
+    echo $build
   }
 
   # Status functions
@@ -149,18 +149,19 @@ setopt prompt_subst
 
   PROMPT="╭─${user_host} ${current_dir} ${git_branch} \$(git_time_since_commit)
 ╰─\$(get_virtual_env)$PR_PROMPT "
+  
 
-
-  local lrprompt=("\$(get_nvim_workspace)")
-  local rprompt_build=(
-    "\$(prefix left $lrprompt)"
+  r1prompt=(
     "\${cmd_runtime}"
-    # "\$(vi_status)"
+    "\${vi_status}"
     "${jobs}"
-    "\$(prefix right $lrprompt)"
-    "%F{cyan}${lrprompt}%f"
   )
-  RPROMPT="${(j::)rprompt_build}"
+  r1prompt="${(j::)r1prompt}"
+  r2prompt=(
+    "\$(get_nvim_workspace)"
+  )
+
+  RPROMPT='$(rprompt_builder)'
 
   #ZSH GIT PROMPT COLLORS SETUP
   #ZSH_THEME_GIT_PROMPT_PREFIX="%F{yellow}‹"
