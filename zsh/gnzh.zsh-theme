@@ -104,9 +104,7 @@ setopt prompt_subst
 
   function get_nvim_workspace() {
     local session_path=$HOME'/.local/share/nvim/sessions/'
-    if [ -f "${session_path}$(pwd | tr / %)" ]; then
-      echo "NVIM"
-    fi
+    [ -f "${session_path}$(pwd | tr / %)" ] && echo "NVIM"
   }
 
   function get_virtual_env() {
@@ -140,7 +138,6 @@ setopt prompt_subst
     PR_HOST='%F{green}%M%f' # no SSH
   fi
 
-
   local return_code="%(?..%F{red}%? ↵%f)"
   local user_host="${PR_USER}%F{cyan}@${PR_HOST}"
   local current_dir="%B%F{blue}%~%f%b"
@@ -159,6 +156,7 @@ setopt prompt_subst
   r1prompt="${(j::)r1prompt}"
   r2prompt=(
     "\$(get_nvim_workspace)"
+    "\$(echo lol)"
   )
 
   RPROMPT='$(rprompt_builder)'

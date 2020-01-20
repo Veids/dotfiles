@@ -18,6 +18,7 @@ unsetopt beep
 # Path setings
 typeset -U path
 path=(
+	"/usr/lib/ccache/bin/"
 	$GOPATH/bin
 	$HOME/.local/bin
 	$path
@@ -25,4 +26,5 @@ path=(
 )
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.go/src/github.com/tomnomnom/gf/gf-completion.zsh ] && source ~/.go/src/github.com/tomnomnom/gf/gf-completion.zsh
 unalias gf
