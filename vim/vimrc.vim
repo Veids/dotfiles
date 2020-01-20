@@ -45,9 +45,8 @@ map <C-n> :NERDTreeToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_autoclose = 1
 let g:workspace_session_directory = $HOME.'/.local/share/nvim/sessions/'
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsSnippetDirectories=["UltiSnips", $HOME."/.local/share/nvim/snippets"]
+let g:workspace_session_disable_on_args = 1
+let g:workspace_autosave_always = 1
 let g:floaterm_keymap_new  = '<leader>t'
 " let g:floaterm_keymap_toggle = '<leader><tab>'
 " let g:floaterm_keymap_prev   = '<leader>tp'
@@ -61,7 +60,6 @@ let g:floaterm_winblend = 12
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree'
 Plug 'yggdroot/indentline'
-Plug 'chiel92/vim-autoformat'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -71,11 +69,9 @@ Plug 'christoomey/vim-sort-motion'
 Plug 'raimondi/delimitmate'
 Plug 'tpope/vim-fugitive'
 Plug 'majutsushi/tagbar'
-Plug 'ryanoasis/vim-devicons'
 Plug 'thaerkh/vim-workspace'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/vim-easy-align'
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-unimpaired'
@@ -83,6 +79,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm'
+Plug 'lambdalisue/suda.vim'
 
 "######################################
 "############### Colors ###############
