@@ -53,6 +53,7 @@ let g:floaterm_keymap_new  = '<leader>t'
 " let g:floaterm_keymap_next   = '<leader>tn'
 let g:floaterm_position = "center"
 let g:floaterm_winblend = 12
+let g:coc_global_extensions = ['coc-python', 'coc-snippets', 'coc-ultisnips', 'coc-json']
 
 "######################################
 "########## Plugin section ############

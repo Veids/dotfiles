@@ -1,3 +1,4 @@
 {
-	"snippets.userSnippetsDirectory": "~/.dotfiles/vim/snippets"
+	"snippets.userSnippetsDirectory": "~/.dotfiles/vim/snippets",
+	"coc.preferences.formatOnSaveFiletypes": ["python"]
 }
