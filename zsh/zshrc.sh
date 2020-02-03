@@ -9,6 +9,8 @@ export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_AUTOQUIT=false
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock.$(hostname)
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+export VAGRANT_HOME=/vm/vagrant
+export CCACHE_DIR=/var/cache/ccache
 
 ZSH=$(antibody path robbyrussell/oh-my-zsh)
 source ~/.zsh_plugins.sh
