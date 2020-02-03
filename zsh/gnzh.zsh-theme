@@ -7,17 +7,31 @@ function precmd() {
   if [ $timer ]; then
     unset cmd_runtime
     local elapsed=$(($(date +%s) - $timer))
-    local minutes=$(($elapsed / 60))
-    local sub_seconds=$(($elapsed % 60))
-    if [ $minutes -gt 0 ]; then
-      cmd_runtime=$(printf "%dm%ds" $minutes $sub_seconds)
-    elif [ $elapsed -gt 0 ]; then
-      cmd_runtime=$elapsed's'
+    local days=$((elapsed / 86400))
+    local hours=$((elapsed % 86400 / 3600))
+
+    if [ $days -gt 0 ]; then
+      cmd_runtime="${days}d${hours}h"
+    else
+      local minutes=$(($elapsed % 3600 / 60))
+      if [ $hours -gt 0 ]; then
+        cmd_runtime="${hours}h${minutes}m"
+      else
+        local seconds=$(($elapsed % 60))
+        if [ $minutes -gt 0 ]; then
+          cmd_runtime="${minutes}m${seconds}s"
+        elif [ $elapsed -gt 0 ]; then
+          cmd_runtime=$elapsed's'
+        fi
+      fi
     fi
+
     unset timer
     if [ $cmd_runtime ]; then
       cmd_runtime="[ $cmd_runtime ⏳]"
     fi
+  else
+    unset cmd_runtime
   fi
 }
 
