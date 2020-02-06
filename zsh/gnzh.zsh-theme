@@ -42,14 +42,11 @@ setopt prompt_subst
   function eval_len_array() {
     local full=0
     _res=()
-
-    local idx=0
-    for x in $1; do
+    for x in ${1[@]}; do
       eval res=$x
       _res+=("$res")
-      idx+=1
       if [ $res ]; then
-        full+=$(expr length $_res[$idx])
+        full=$(($full + $2))
       fi
     done
     echo $_res
@@ -59,20 +56,28 @@ setopt prompt_subst
   function rprompt_builder() {
     function left()  echo "%{$(echotc LEFT $1)%}"
     function right() echo "%{$(echotc RIGHT $1)%}"
+    local __supl_size=7
 
-    build="%{$(echotc UP 1)%}"
-    res=$(eval_len_array $r2prompt)
-    len=$?
-    eval __tmp=$r1prompt
-    if [ $len -gt 0 ]; then
-      build+="$(right $len)"
-      build+=$__tmp
-      build+="$(left $len)"
-      build+="%{$(echotc DOWN 1)%}"
-      build+="%F{cyan}$res%f"
+    eval __r1=$r1prompt
+    __r2=$(eval_len_array $r2prompt $__supl_size)
+    __sub_len=$?
+
+    build=""
+    if [ $__r1 ]; then
+      build="%{$(echotc UP 1)%}"
+      if [ $__r2 ]; then
+        local __len=$(($(expr length $__r2)-$__sub_len))
+        build+="$(right $__len)"
+        build+=$__r1
+        build+="$(left $__len)"
+        build+="%{$(echotc DOWN 1)%}"
+        build+=$__r2
+      else
+        build+=$__r1
+        build+="%{$(echotc DOWN 1)%}"
+      fi
     else
-      build+=$__tmp
-      build+="%{$(echotc DOWN 1)%}"
+      build+=$__r2
     fi
     echo $build
   }
@@ -118,7 +123,7 @@ setopt prompt_subst
 
   function get_nvim_workspace() {
     local session_path=$HOME'/.local/share/nvim/sessions/'
-    [ -f "${session_path}$(pwd | tr / %)" ] && echo "NVIM"
+    [ -f "${session_path}$(pwd | tr / %)" ] && echo "%F{c}NVIM%f"
   }
 
   function get_virtual_env() {
@@ -129,6 +134,13 @@ setopt prompt_subst
   function vi_status() {
     if {echo $fpath | grep -q "plugins/vi-mode"}; then
       echo "$(vi_mode_prompt_info)"
+    fi
+  }
+
+  function stive_jobs() {
+    local __len=$(jobs | wc -l)
+    if [ $__len -gt 0 ]; then
+      echo "[ %F{yellow}$__len⚙%f ]"
     fi
   }
 
@@ -156,7 +168,7 @@ setopt prompt_subst
   local user_host="${PR_USER}%F{cyan}@${PR_HOST}"
   local current_dir="%B%F{blue}%~%f%b"
   local git_branch='$(git_prompt_info)'
-  local jobs="%(1j.[%F{yellow}%j⚙%f].)"
+  # local jobs="%(1j.[%F{yellow}%j⚙%f].)"
 
   PROMPT="╭─${user_host} ${current_dir} ${git_branch} \$(git_time_since_commit)
 ╰─\$(get_virtual_env)$PR_PROMPT "
@@ -164,16 +176,16 @@ setopt prompt_subst
 
   r1prompt=(
     "\${cmd_runtime}"
-    "\${vi_status}"
-    "${jobs}"
+    "\$(vi_status)"
+    "\$(stive_jobs)"
   )
   r1prompt="${(j::)r1prompt}"
   r2prompt=(
     "\$(get_nvim_workspace)"
-    "\$(echo lol)"
   )
 
   RPROMPT='$(rprompt_builder)'
+  # RPROMPT=$R1PROMPT
 
   #ZSH GIT PROMPT COLLORS SETUP
   #ZSH_THEME_GIT_PROMPT_PREFIX="%F{yellow}‹"
