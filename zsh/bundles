@@ -7,7 +7,7 @@ robbyrussell/oh-my-zsh path:plugins/tmux
 robbyrussell/oh-my-zsh path:plugins/sudo
 robbyrussell/oh-my-zsh path:plugins/vagrant
 robbyrussell/oh-my-zsh path:lib
-~/.dotfiles/zsh/gnzh.zsh-theme
+#~/.dotfiles/zsh/gnzh.zsh-theme
 
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-autosuggestions

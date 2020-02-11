@@ -81,6 +81,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm'
 Plug 'lambdalisue/suda.vim'
+Plug 'ryanoasis/vim-devicons'
 
 "######################################
 "############### Colors ###############
