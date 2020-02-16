@@ -19,6 +19,7 @@ export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock.$(hostname)
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VAGRANT_HOME=/vm/vagrant
 export CCACHE_DIR=/var/cache/ccache
+export XDG_CONFIG_HOME=~/.config
 
 ZSH=$(antibody path robbyrussell/oh-my-zsh)
 source ~/.zsh_plugins.sh
