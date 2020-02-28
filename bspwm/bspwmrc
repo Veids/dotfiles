@@ -1,18 +1,19 @@
 #! /bin/sh
 xsetroot -cursor_name left_ptr
 xrdb ~/.Xresources
-compton &
-mpd &
+picom &
 polybar top &
 polybar bottom &
-feh --bg-center ~/lancer.jpg -bg-scale &
-conky &
+feh --bg-center ~/space.jpeg -bg-scale &
+# conky &
 sxhkd &
 
-bspc config border_width         0
+# Config
+
+bspc config border_width         3
 bspc config normal_border_color  "#191919"
 bspc config focused_border_color "#2F2F2F"
-bspc config window_gap           15
+bspc config window_gap           14
 
 bspc config split_ratio          0.52
 bspc config borderless_monocle   true
@@ -21,15 +22,38 @@ bspc config focus_by_distance    true
 bspc config history_aware_focus  true
 bspc config click_to_focus       true
 
-bspc config pointer_mod mod1
+bspc config pointer_modifier mod4
 bspc config pointer_action1 move
+bspc config pointer_action3 resize_corner
 
-bspc monitor -d term web code music
-
-bspc config top_padding 30
-bspc config bottom_padding 0
+bspc config top_padding 25
+bspc config bottom_padding 25
 bspc config left_padding 0
 bspc config right_padding 0
 
+# Monitors
+bspc monitor -d term web code music sec msg anki
+
+# Rules
 bspc rule -a Gnome-calendar state=floating
+bspc rule -a blueberry state=floating
 bspc rule -a urxvt state=floating
+bspc rule -a KeePassXC dekstop='^5'
+bspc rule -a Google-chrome desktop='^2'
+bspc rule -a Deadbeef desktop='^4'
+bspc rule -a Anki desktop='^7'
+
+# Layout toggle
+setxkbmap -option grp:alt_shift_toggle us,ru
+
+# Lock screen
+xidlehook \
+  --not-when-fullscreen \
+  --timer 90 \
+    'echo $(xbacklight -get) > /tmp/xidlebacklight; xbacklight -set 1 -time 600 -fps 30' \
+    'xbacklight -set $(cat /tmp/xidlebacklight) -time 600 -fps 30; rm /tmp/xidlebacklight' \
+  --timer 60 \
+    'qdbus org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases 2> /dev/null; i3lock-fancy' \
+    'xbacklight -set $(cat /tmp/xidlebacklight) -time 600 -fps 30; rm /tmp/xidlebacklight' \
+  --timer 3600 \
+  'systemctl suspend' 'xbacklight -set $(cat /tmp/xidlebacklight)' &

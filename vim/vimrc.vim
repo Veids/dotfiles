@@ -35,6 +35,10 @@ nnoremap <silent> <leader>o :FZF<CR>
 " nnoremap <silent> <leader>h :History<CR>
 nnoremap <tab> <c-w>
 nnoremap <tab><tab> <c-w><c-w>
+noremap <Leader>y "*y
+noremap <Leader>p "*p
+noremap <Leader>Y "+y
+noremap <Leader>P "+p
 nmap ; :Buffers<CR>
 nmap <F8> :TagbarToggle<CR>
 nmap ga <Plug>(EasyAlign)

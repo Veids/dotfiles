@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rofi_command="rofi -theme themes/promptmenu.rasi"
+rofi_command="rofi -theme ~/.dotfiles/polybar/themes/promptmenu.rasi"
 
 ### Options ###
 yes_text="Confirm"

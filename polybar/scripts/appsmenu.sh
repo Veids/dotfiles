@@ -1,4 +1,4 @@
 #!/bin/sh
 
-rofi -no-lazy-grab -show drun -theme themes/appsmenu.rasi
+rofi -no-lazy-grab -show drun -theme ~/.dotfiles/polybar/themes/appsmenu.rasi -show-icons
 

@@ -6,6 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Varibles config
+[ -f ~/.shadow.zsh ] && source ~/.shadow.zsh
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export EDITOR=nvim
@@ -15,13 +16,14 @@ export GOPATH=$HOME/.go
 export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_AUTOQUIT=false
 export ZSH_THEME="powerlevel10k/powerlevel10k"
-export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock.$(hostname)
+# export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock.$(hostname)
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VAGRANT_HOME=/vm/vagrant
 export CCACHE_DIR=/var/cache/ccache
 export XDG_CONFIG_HOME=~/.config
 
 ZSH=$(antibody path robbyrussell/oh-my-zsh)
+
 source ~/.zsh_plugins.sh
 
 unsetopt beep

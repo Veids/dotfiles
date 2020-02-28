@@ -1,0 +1,1 @@
+SUBSYSTEM=="rfkill", RUN+="/usr/bin/su veids -c '/home/veids/.dotfiles/polybar/scripts/airplane.sh --trigger'"
