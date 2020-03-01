@@ -38,9 +38,11 @@ bspc monitor -d term web code music sec msg anki book
 bspc rule -a Gnome-calendar state=floating
 bspc rule -a blueberry state=floating
 bspc rule -a urxvt state=floating
-bspc rule -a KeePassXC dekstop='^5'
+
 bspc rule -a Google-chrome desktop='^2'
 bspc rule -a Deadbeef desktop='^4'
+bspc rule -a KeePassXC dekstop='^5'
+bspc rule -a TelegramDesktop desktop='^6'
 bspc rule -a Anki desktop='^7'
 
 # Layout toggle
