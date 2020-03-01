@@ -32,7 +32,7 @@ bspc config left_padding 0
 bspc config right_padding 0
 
 # Monitors
-bspc monitor -d term web code music sec msg anki
+bspc monitor -d term web code music sec msg anki book
 
 # Rules
 bspc rule -a Gnome-calendar state=floating
@@ -50,10 +50,10 @@ setxkbmap -option grp:alt_shift_toggle us,ru
 xidlehook \
   --not-when-fullscreen \
   --timer 90 \
-    'echo $(xbacklight -get) > /tmp/xidlebacklight; xbacklight -set 1 -time 600 -fps 30' \
-    'xbacklight -set $(cat /tmp/xidlebacklight) -time 600 -fps 30; rm /tmp/xidlebacklight' \
+    'echo $(xbacklight -get) > /tmp/xidlebacklight; xbacklight -set 1 -time 400 -fps 30' \
+    'xbacklight -set $(cat /tmp/xidlebacklight) -time 400 -fps 30; rm /tmp/xidlebacklight' \
   --timer 60 \
     'qdbus org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases 2> /dev/null; i3lock-fancy' \
-    'xbacklight -set $(cat /tmp/xidlebacklight) -time 600 -fps 30; rm /tmp/xidlebacklight' \
+    'xbacklight -set $(cat /tmp/xidlebacklight) -time 400 -fps 30; rm /tmp/xidlebacklight' \
   --timer 3600 \
   'systemctl suspend' 'xbacklight -set $(cat /tmp/xidlebacklight)' &

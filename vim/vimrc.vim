@@ -103,4 +103,5 @@ let g:airline_theme='deus'
 
 call plug#end()
 colorscheme PaperColor
+hi Normal guibg=NONE ctermbg=NONE
 " colorscheme kuroi
