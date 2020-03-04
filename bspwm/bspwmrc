@@ -4,7 +4,7 @@ xrdb ~/.Xresources
 picom &
 polybar top &
 polybar bottom &
-feh --bg-center ~/space.jpeg -bg-scale &
+feh --bg-center ~/space.jpeg --bg-scale &
 # conky &
 sxhkd &
 
@@ -32,13 +32,14 @@ bspc config left_padding 2
 bspc config right_padding 3
 
 # Monitors
-bspc monitor -d term web code music sec msg anki book
+bspc monitor -d term web code music sec msg anki book re
 
 # Rules
 bspc rule -a Gnome-calendar state=floating
 bspc rule -a blueberry state=floating
 bspc rule -a urxvt state=floating
 bspc rule -a Customize\ CLion state=floating
+bspc rule -a Wine state=floating
 
 bspc rule -a Google-chrome desktop='^2'
 bspc rule -a Deadbeef desktop='^4'
