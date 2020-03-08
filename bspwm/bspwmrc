@@ -40,10 +40,11 @@ bspc rule -a blueberry state=floating
 bspc rule -a urxvt state=floating
 bspc rule -a Customize\ CLion state=floating
 bspc rule -a Wine state=floating
+bspc rule -a MEGAsync state=floating border=off
 
 bspc rule -a Google-chrome desktop='^2'
 bspc rule -a Deadbeef desktop='^4'
-bspc rule -a KeePassXC dekstop='^5'
+bspc rule -a KeePassXC desktop='^5'
 bspc rule -a TelegramDesktop desktop='^6'
 bspc rule -a Anki desktop='^7'
 

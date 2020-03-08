@@ -8,7 +8,7 @@ super + Return
 
 # program launcher
 super + m
-         rofi -no-lazy-grab -show drun -theme ~/.dotfiles/polybar/themes/appsmenu.rasi
+         rofi -no-lazy-grab -show drun -show-icons -theme ~/.dotfiles/polybar/themes/appsmenu.rasi
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -43,8 +43,8 @@ super + space
 #	bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
 
 # swap the current node and the biggest node
-#super + g
-#	bspc node -s biggest
+super + g
+	bspc node -s biggest
 
 #
 # state/flags
@@ -55,8 +55,8 @@ super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
-#super + ctrl + {x,y,z}
-#	bspc node -g {locked,sticky,private}
+super + ctrl + {x,y,z}
+	bspc node -g {locked,sticky,private}
 
 #
 # focus/swap
@@ -141,11 +141,11 @@ XF86AudioLowerVolume
 XF86AudioMute
 	amixer -qD pulse sset Master mute
 
-XF86MonBrightnessDown
-	xbacklight -dec 5 -time 200 -fps 30
-
 XF86MonBrightnessUp
-	xbacklight -inc 5 -time 200 -fps 30
+	xbacklight -inc 5 -time 150 -fps 30
+
+XF86MonBrightnessDown
+	xbacklight -dec 5 -time 150 -fps 30
 
 XF86AudioNext 
 	playerctl -p playerctld next
