@@ -60,21 +60,7 @@ usb_print() {
     echo "$output $mounted $unmounted"
 }
 
-usb_update() {
-    pid=$(/usr/bin/cat "$path_pid")
-
-    if [ "$pid" != "" ]; then
-        kill -10 "$pid"
-    fi
-    exit 0
-}
-
-path_pid="/tmp/polybar-system-usb-udev.pid"
-
 case "$1" in
-    --update)
-        usb_update
-        ;;
     --mount)
         devices=$(lsblk -Jplno NAME,TYPE,RM,MOUNTPOINT)
 
@@ -92,7 +78,7 @@ case "$1" in
             fi
         done < <(lsusb)
 
-        usb_update
+        polybar-msg -p $2 hook usb 1
         ;;
     --unmount)
         devices=$(lsblk -Jplno NAME,TYPE,RM,MOUNTPOINT)
@@ -112,19 +98,9 @@ case "$1" in
             fi
         done < <(lsusb)
 
-        usb_update
+        polybar-msg -p $2 hook usb 1
         ;;
     *)
-        echo $$ > $path_pid
-
-        trap exit INT
-        trap "echo" USR1
-
-        while true; do
-            usb_print
-
-            sleep 60 &
-            wait
-        done
+        usb_print
         ;;
 esac

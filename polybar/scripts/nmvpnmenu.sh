@@ -13,9 +13,9 @@ active="$(nmcli -g name,type con show --active 2> /dev/null | egrep '(vpn|wiregu
 case $1 in
     --status)
         if [ $active ]; then
-            echo " $active"
+            echo "󱄻 $active"
         else
-            echo ""
+            echo "󰒙"
         fi
         ;;
     *)
