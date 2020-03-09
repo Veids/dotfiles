@@ -87,6 +87,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'lambdalisue/suda.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'cometsong/commentframe.vim'
+Plug 'KabbAmine/vCoolor.vim'
 
 "######################################
 "############### Colors ###############
