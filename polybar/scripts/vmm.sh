@@ -3,6 +3,7 @@
 
 lxc_icon=
 libvirt_icon=ﲾ
+docker_icon=
 
 function process_list() {
     list=("${@:2}")
@@ -27,4 +28,10 @@ function get_libvirt() {
     process_list $libvirt_icon "${active_list[@]}"
 }
 
-echo $(get_lxc) $(get_libvirt)
+# docker info (just container id)
+function get_docker() {
+    mapfile -t active_list < <(sudo docker ps -q)
+    process_list $docker_icon "${active_list[@]}"
+}
+
+echo $(get_lxc) $(get_libvirt) $(get_docker)
