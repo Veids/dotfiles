@@ -1,37 +1,55 @@
 #!/bin/bash
 # Orig. Author: https://github.com/polybar/polybar-scripts
 
-usb_print() {
+function mount_usb() {
+    udisksctl mount --no-user-interaction -b "$1"
+}
+
+function unmount_usb() {
+    udisksctl unmount --no-user-interaction -b "$1"
+    udisksctl power-off --no-user-interaction -b "$1"
+}
+
+function usb_devices() {
     devices=$(lsblk -Jplno NAME,TYPE,RM,SIZE,MOUNTPOINT,VENDOR)
     output=""
     counter=0
 
     for unmounted in $(echo "$devices" | jq -r '.blockdevices[] | select(.type == "part") | select(.rm == true) | select(.mountpoint == null) | .name'); do
+        mpoint=$unmounted
         unmounted=$(echo "$unmounted" | tr -d "[:digit:]")
         unmounted=$(echo "$devices" | jq -r '.blockdevices[] | select(.name == "'"$unmounted"'") | .vendor')
         unmounted=$(echo "$unmounted" | tr -d ' ')
 
-        if [ $counter -eq 0 ]; then
-            space=""
-        else
-            space="   "
-        fi
-        counter=$((counter + 1))
+        [ -z $counter ] && space="" || space="   "
 
-        output="$output$space禍 $unmounted"
+        output="$output$space%{A1:~/.dotfiles/polybar/scripts/usb.sh --musb $mpoint:}禍 $unmounted%{A}"
+        counter=$((counter + 1))
     done
 
-    for mounted in $(echo "$devices" | jq -r '.blockdevices[] | select(.type == "part") | select(.rm == true) | select(.mountpoint != null) | .size'); do
-        if [ $counter -eq 0 ]; then
-            space=""
-        else
-            space="   "
-        fi
+    for mounted in $(echo "$devices" | jq -r '.blockdevices[] | select(.type == "part") | select(.rm == true) | select(.mountpoint != null) | .name'); do
+        mpoint=$mounted
+        mounted=$(echo "$mounted" | tr -d "[:digit:]")
+        mounted=$(echo "$devices" | jq -r '.blockdevices[] | select(.name == "'"$mounted"'") | .vendor')
+        mounted=$(echo "$mounted" | tr -d ' ')
+
+        [ -z $counter ] && space="" || space="   "
+
+        output="$output$space%{A1:~/.dotfiles/polybar/scripts/usb.sh --uusb $mpoint:} $mounted%{A}"
         counter=$((counter + 1))
-
-        output="$output$space $mounted"
     done
+    echo $output
+}
 
+function mount_mtp() {
+    gio mount mtp://"$1"
+}
+
+function unmount_mtp() {
+    gio mount -u mtp://"$1"
+}
+
+function mtp_devices() {
     #MTP Devices
     mounted=""
     unmounted=""
@@ -47,60 +65,40 @@ usb_print() {
         if [ "$(gio info mtp://$serial 2>/dev/null)" != "" ]; then
             [ -z $counter_mounted ] && space="" || space="   "
 
-            mounted="$mounted$space $model"
+            mounted="$mounted$space%{A1:~/.dotfiles/polybar/scripts/usb.sh --umtp $serial:}󰧕 $model%{A}"
             counter_mounted=$((counter_mounted + 1))
         else
             [ -z $counter_unmounted ] && space="" || space="   "
 
-            pause="%{A1:playerctl -p $PLAYER play-pause:} %{A}"
-            unmounted="$unmounted$space禍 $model"
+            unmounted="$unmounted$space%{A1:~/.dotfiles/polybar/scripts/usb.sh --mmtp $serial:}󰄝 $model%{A}"
             counter_unmounted=$((counter_unmounted + 1))
         fi
     done < <(lsusb)
-    echo "$output $mounted $unmounted"
+    echo "$mounted $unmounted"
+}
+
+function polybar_ipc() {
+    polybar-msg -p $(pgrep -f polybar\ top) hook usb 1
 }
 
 case "$1" in
-    --mount)
-        devices=$(lsblk -Jplno NAME,TYPE,RM,MOUNTPOINT)
-
-        for mount in $(echo "$devices" | jq -r '.blockdevices[] | select(.type == "part") | select(.rm == true) | select(.mountpoint == null) | .name'); do
-            udisksctl mount --no-user-interaction -b "$mount"
-        done
-
-        while read line; do
-            device=$(echo "$line" | awk '{printf "/dev/bus/usb/%03d/%03d\n", $2,$4 }' | xargs -I{} udevadm info --name={})
-            [ "$(echo "$device" | grep libmtp)" == "" ] && continue
-
-            serial=$(printf "$device" | awk -F= '/ID_SERIAL=/ {print $2}' )
-            if [ "$(gio info mtp://$serial 2>/dev/null)" == "" ]; then
-                gio mount mtp://$serial
-            fi
-        done < <(lsusb)
-
-        polybar-msg -p $2 hook usb 1
+    --musb)
+        mount_usb $2
+        polybar_ipc
         ;;
-    --unmount)
-        devices=$(lsblk -Jplno NAME,TYPE,RM,MOUNTPOINT)
-
-        for unmount in $(echo "$devices" | jq -r '.blockdevices[] | select(.type == "part") | select(.rm == true) | select(.mountpoint != null) | .name'); do
-            udisksctl unmount --no-user-interaction -b "$unmount"
-            udisksctl power-off --no-user-interaction -b "$unmount"
-        done
-
-        while read line; do
-            device=$(echo "$line" | awk '{printf "/dev/bus/usb/%03d/%03d\n", $2,$4 }' | xargs -I{} udevadm info --name={})
-            [ "$(echo "$device" | grep libmtp)" == "" ] && continue
-
-            serial=$(printf "$device" | awk -F= '/ID_SERIAL=/ {print $2}' )
-            if [ "$(gio info mtp://$serial 2>/dev/null)" != "" ]; then
-                gio mount -u mtp://$serial
-            fi
-        done < <(lsusb)
-
-        polybar-msg -p $2 hook usb 1
+    --uusb)
+        unmount_usb $2
+        polybar_ipc
+        ;;
+    --mmtp)
+        mount_mtp $2
+        polybar_ipc
+        ;;
+    --umtp)
+        unmount_mtp $2
+        polybar_ipc
         ;;
     *)
-        usb_print
+        echo $(usb_devices) $(mtp_devices)
         ;;
 esac
