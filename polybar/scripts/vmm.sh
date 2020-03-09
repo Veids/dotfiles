@@ -3,7 +3,7 @@
 
 lxc_icon=
 libvirt_icon=ﲾ
-docker_icon=
+docker_icon=󰡨
 
 function process_list() {
     list=("${@:2}")
