@@ -88,14 +88,19 @@ Plug 'lambdalisue/suda.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'cometsong/commentframe.vim'
 Plug 'KabbAmine/vCoolor.vim'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
 "######################################
 "############### Colors ###############
 
-" Plug 'mhartington/oceanic-next'
-" Plug 'aonemd/kuroi.vim'
-Plug 'BarretRen/vim-colorscheme'
 Plug 'NLKNguyen/papercolor-theme'
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default': {
+  \       'transparent_background': 1
+  \     }
+  \   }
+  \ }
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -105,5 +110,4 @@ let g:airline_theme='deus'
 
 call plug#end()
 colorscheme PaperColor
-hi Normal guibg=NONE ctermbg=NONE
-" colorscheme kuroi
+" hi Normal guibg=NONE ctermbg=NONE

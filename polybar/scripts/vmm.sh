@@ -18,7 +18,7 @@ function process_list() {
 
 # lxc/lxd info
 function get_lxc() {
-    mapfile -t active_list < <(sudo lxc ls --format csv -c n,s | grep RUNNING | awk -F, '{print $1}')
+    mapfile -t active_list < <(sudo lxc ls --format csv -c n,s 2>/dev/null | grep RUNNING | awk -F, '{print $1}')
     process_list $lxc_icon "${active_list[@]}"
 }
 

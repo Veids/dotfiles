@@ -64,15 +64,9 @@ case $1 in
                     disconnect
                     wait
                     sleep 1
-                    # Connect to the chosen one
-                    connect
-                # No vpn is active
-                else
-                    # Connect to the chosen one
-                    connect
                 fi
+                connect
             fi
         fi
         ;;
 esac
-

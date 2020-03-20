@@ -1,0 +1,6 @@
+[swipe.commands.three]
+left='bspc desktop -f prev'
+right='bspc desktop -f next'
+
+[swipe.settings]
+one_shot=true

@@ -8,11 +8,16 @@ feh --bg-center ~/space.jpeg --bg-scale &
 # conky &
 sxhkd &
 
+gebaard -b
+
 # Config
 
-bspc config border_width         3
+bspc config border_width         2
 bspc config normal_border_color  "#191919"
 bspc config focused_border_color "#2F2F2F"
+# bspc config normal_border_color  "#f7f8f8"
+# bspc config focused_border_color "#f8818e"
+# bspc config active_border_color   "#f7f8f8"
 bspc config window_gap           14
 
 bspc config split_ratio          0.52

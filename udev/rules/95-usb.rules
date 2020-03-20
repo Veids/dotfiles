@@ -1,7 +1,5 @@
-KERNEL=="sd*", ACTION=="add", ATTR{removable}=="1", \
-    RUN+="/usr/bin/su veids -c \"polybar-msg -p $(pgrep -f polybar\ top) hook usb 1\""
-KERNEL=="sd*", ACTION=="remove", \
-    RUN+="/usr/bin/su veids -c \"polybar-msg -p $(pgrep -f polybar\ top) hook usb 1\""
+SUBSYSTEM=="usb", ACTION=="add", RUN+="/usr/bin/su veids -c \"polybar-msg -p $(pgrep -f polybar\ top) hook usb 1\""
+SUBSYSTEM=="usb", ACTION=="remove", RUN+="/usr/bin/su veids -c \"polybar-msg -p $(pgrep -f polybar\ top) hook usb 1\""
 ENV{ID_MTP_DEVICE}!="1", ENV{MTP_NO_PROBE}!="1", ENV{COLOR_MEASUREMENT_DEVICE}!="1", ENV{ID_GPHOTO}!="1", ENV{libsane_matched}!="yes", ATTR{bDeviceClass}=="00|02|06|ef|ff", PROGRAM="/usr/lib/udev/mtp-probe /sys$env{DEVPATH} $attr{busnum} $attr{devnum}", RESULT=="1", SYMLINK+="libmtp-%k", ENV{ID_MTP_DEVICE}="1", ENV{ID_MEDIA_PLAYER}="1" ACTION="add"
     RUN+="/usr/bin/su veids -c \"polybar-msg -p $(pgrep -f polybar\ top) hook usb 1\""
 ENV{ID_MTP_DEVICE}!="1", ENV{MTP_NO_PROBE}!="1", ENV{COLOR_MEASUREMENT_DEVICE}!="1", ENV{ID_GPHOTO}!="1", ENV{libsane_matched}!="yes", ATTR{bDeviceClass}=="00|02|06|ef|ff", PROGRAM="/usr/lib/udev/mtp-probe /sys$env{DEVPATH} $attr{busnum} $attr{devnum}", RESULT=="1", ACTION="remove"
