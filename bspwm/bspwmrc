@@ -32,9 +32,9 @@ bspc config pointer_action1 move
 bspc config pointer_action3 resize_corner
 
 bspc config top_padding 25
-bspc config bottom_padding 25
-bspc config left_padding 2
-bspc config right_padding 3
+bspc config bottom_padding 27
+bspc config left_padding 3
+bspc config right_padding 4
 
 # Monitors
 bspc monitor -d term web code music sec msg anki book re
@@ -55,6 +55,9 @@ bspc rule -a Anki desktop='^7'
 
 # Layout toggle
 setxkbmap -option grp:alt_shift_toggle us,ru
+
+# Shift-home, shift-end
+setxkbmap -option numpad:microsoft
 
 # Lock screen
 xidlehook \

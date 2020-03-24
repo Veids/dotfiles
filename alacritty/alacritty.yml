@@ -19,44 +19,82 @@ font:
     style: Italic
 
   # Point size of the font
-  size: 9.5
+  size: 7
 
 # Background opacity
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.5
+background_opacity: 0.85
 
 # Colors (Ayu Dark)
 # KDE Breeze (Ported from Konsole)
 # Colors (Darkside)
+# Colors (Gruvbox dark)
 colors:
+  # Default colors
   primary:
-    background: "#222324"
-    foreground: "#BABABA"
+    background: '0x1e2127'
+    foreground: '0xabb2bf'
+
+    # Bright and dim foreground colors
+    #
+    # The dimmed foreground color is calculated automatically if it is not present.
+    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
+    # is `false`, the normal foreground color will be used.
+    #dim_foreground: '0x9a9a9a'
+    bright_foreground: '0xe6efff'
+
+  # Cursor colors
+  #
+  # Colors which should be used to draw the terminal cursor. If these are unset,
+  # the cursor color will be the inverse of the cell color.
+  #cursor:
+  #  text: '0x000000'
+  #  cursor: '0xffffff'
 
   # Normal colors
   normal:
-    black:    "#000000"
-    red:      "#E8341C"
-    green:    "#68C256"
-    yellow:   "#F2D42C"
-    blue:     "#1C98E8"
-    magenta:  "#8E69C9"
-    cyan:     "#1C98E8"
-    white:    "#BABABA"
+    black:   '0x1e2127'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0x828791'
 
   # Bright colors
   bright:
-    black:    "#666666"
-    red:      "#E05A4F"
-    green:    "#77B869"
-    yellow:   "#EFD64B"
-    blue:     "#387CD3"
-    magenta:  "#957BBE"
-    cyan:     "#3D97E2"
-    white:    "#BABABA"
-# Colors (Gruvbox dark)
+    black:   '0x5c6370'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0xe6efff'
+
+  # Dim colors
+  #
+  # If the dim colors are not set, they will be calculated automatically based
+  # on the `normal` colors.
+  dim:
+    black:   '0x1e2127'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0x828791'
+
+  # Indexed Colors
+  #
+  # The indexed colors include all colors from 16 to 256.
+  # When these are not set, they're filled with sensible defaults.
+  #indexed_colors:
+  #  - { index: 16, color: '0x000000' }
 # Colors (Hybrid)
 # Colors (Molokai Dark)
 # Colors (Monokai Soda)

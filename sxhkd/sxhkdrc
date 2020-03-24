@@ -8,7 +8,7 @@ super + Return
 
 # program launcher
 super + m
-         rofi -no-lazy-grab -show drun -show-icons -theme ~/.dotfiles/polybar/themes/appsmenu.rasi
+	~/.dotfiles/polybar/scripts/appsmenu.sh
 
 # make sxhkd reload its configuration files:
 super + Escape

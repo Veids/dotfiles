@@ -40,3 +40,4 @@ path=(
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.go/src/github.com/tomnomnom/gf/gf-completion.zsh ] && source ~/.go/src/github.com/tomnomnom/gf/gf-completion.zsh && unalias gf
 [ -f ~/.p10k.zsh ] && source ~/.p10k.zsh
+[ -f ~/.config/broot/launcher/bash/br ] && source /home/veids/.config/broot/launcher/bash/br
