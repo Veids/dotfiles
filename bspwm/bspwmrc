@@ -1,14 +1,21 @@
 #! /bin/sh
 xsetroot -cursor_name left_ptr
 xrdb ~/.Xresources
-picom &
+feh --bg-center --bg-scale ~/space.jpg
+
+#primary autostart
+deadd-notification-center &
+picom --experimental-backends &
 polybar top &
 polybar bottom &
-feh --bg-center ~/space.jpeg --bg-scale &
 # conky &
 sxhkd &
-
 gebaard -b
+
+#secondary autostart
+nextcloud &
+joplin-desktop &
+telegram-desktop &
 
 # Config
 
@@ -48,6 +55,8 @@ bspc rule -a Wine state=floating
 bspc rule -a MEGAsync state=floating border=off
 
 bspc rule -a Google-chrome desktop='^2'
+bspc rule -a firefox desktop='^2'
+bspc rule -a code-oss desktop='^3'
 bspc rule -a Deadbeef desktop='^4'
 bspc rule -a KeePassXC desktop='^5'
 bspc rule -a TelegramDesktop desktop='^6'

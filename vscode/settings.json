@@ -1,12 +1,21 @@
 {
-    "editor.fontFamily": "'Hack Nerd Font Mono','Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
-    "workbench.colorTheme": "Atom One Dark",
+    "C_Cpp.clang_format_style": "Google",
+    "C_Cpp.default.cStandard": "c11",
+    "C_Cpp.default.cppStandard": "c++17",
+    "carbon.useBrowserCache": true,
+    "carbon.windowControls": false,
+    "cmake.configureOnOpen": true,
     "coverage-gutters.showLineCoverage": true,
     "coverage-gutters.showRulerCoverage": true,
+    "editor.enableFontLigatures": true,
+    "editor.fontFamily": "'Hack Nerd Font Mono','Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.formatOnSave": true,
     "files.autoSave": "afterDelay",
-    "vscode-neovim.neovimPath": "/usr/bin/nvim",
+    "glsllint.glslangValidatorPath": "/usr/bin/glslangValidator",
     "vscode-neovim.neovimInitPath": "~/.config/nvim/init.vim",
-    "carbon.windowControls": false,
-    "carbon.useBrowserCache": true,
-    "glsllint.glslangValidatorPath": "/usr/bin/glslangValidator"
+    "vscode-neovim.neovimPath": "/usr/bin/nvim",
+    "workbench.colorTheme": "Atom One Dark",
+    "window.zoomLevel": 0,
+    "editor.lineNumbers": "relative",
+    "editor.tabSize": 2
 }

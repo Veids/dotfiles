@@ -1,13 +1,24 @@
 if exists('g:vscode')
   call plug#begin('~/.local/share/nvim/plugged')
   "######################################
+  "########## Plugin bindings ###########
+  xmap gc  <Plug>VSCodeCommentary
+  nmap gc  <Plug>VSCodeCommentary
+  omap gc  <Plug>VSCodeCommentary
+  nmap gcc <Plug>VSCodeCommentaryLine
+
+  nmap s <Plug>(easymotion-s2)
+
+  "######################################
   "########## VSCode plugins ############
+  Plug 'asvetliakov/vim-easymotion', {'as': 'vscode-motion'}
   Plug 'christoomey/vim-sort-motion'
   Plug 'cometsong/commentframe.vim'
-  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-surround'
   Plug 'yggdroot/indentline'
-  Plug 'tpope/vim-repeat'
+
+
   call plug#end()
 else
   call plug#begin('~/.local/share/nvim/plugged')
@@ -43,6 +54,8 @@ else
   imap <c-x><c-f> <plug>(fzf-complete-path)
   imap <c-x><c-l> <plug>(fzf-complete-buffer-line)
 
+  nmap s <Plug>(easymotion-s2)
+
   nnoremap <leader>s :ToggleWorkspace<CR>
   nnoremap <silent> <leader>o :FZF<CR>
   " nnoremap <silent> <leader>h :History<CR>
@@ -70,7 +83,7 @@ else
   " let g:floaterm_keymap_next   = '<leader>tn'
   let g:floaterm_position = "center"
   let g:floaterm_winblend = 12
-  let g:coc_global_extensions = ['coc-python', 'coc-snippets', 'coc-ultisnips', 'coc-json']
+  let g:coc_global_extensions = ['coc-python', 'coc-snippets',  'coc-ultisnips', 'coc-json']
 
   "######################################
   "########## Plugin section ############
@@ -80,8 +93,9 @@ else
   Plug 'christoomey/vim-sort-motion'
   Plug 'cometsong/commentframe.vim'
   Plug 'honza/vim-snippets'
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
+  " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/vim-easy-align'
   Plug 'lambdalisue/suda.vim'
   Plug 'majutsushi/tagbar'
@@ -102,6 +116,7 @@ else
   Plug 'tpope/vim-unimpaired'
   Plug 'voldikss/vim-floaterm'
   Plug 'yggdroot/indentline'
+  Plug 'easymotion/vim-easymotion'
 
   "######################################
   "############### Colors ###############

@@ -13,6 +13,7 @@ export GOFLAGS="-buildmode=pie"
 export GOPATH=$HOME/.go
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
+export QT_QPA_PLATFORMTHEME="qt5ct"
 export TERM=putty-256color
 export VAGRANT_HOME=/vm/vagrant
 export VIRTUAL_ENV_DISABLE_PROMPT=1

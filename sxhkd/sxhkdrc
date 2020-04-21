@@ -23,6 +23,18 @@ super + shift + x
 	qdbus org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases 2> /dev/null; i3lock-fancy
 
 #
+# Notifications hotkeys
+#
+
+# open notification center
+super + n
+	killall -SIGUSR1 deadd-notification-center
+
+# clear popups
+ctrl + space
+	notify-send.py a --hint boolean:deadd-notification-center:true string:type:clearPopups
+
+#
 # bspwm hotkeys
 #
 
@@ -142,10 +154,10 @@ XF86AudioMute
 	amixer -qD pulse sset Master mute
 
 XF86MonBrightnessUp
-	xbacklight -inc 5 -time 150 -fps 30
+	xbacklight -inc 5 -time 150 -fps 30 &
 
 XF86MonBrightnessDown
-	xbacklight -dec 5 -time 150 -fps 30
+	xbacklight -dec 5 -time 150 -fps 30 &
 
 XF86AudioNext 
 	playerctl -p playerctld next

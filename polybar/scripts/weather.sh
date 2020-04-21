@@ -37,7 +37,7 @@ if [ -n "$CITY" ]; then
     else
         CITY_PARAM="q=$CITY"
     fi
-    weather=$(curl -sf "$API/weather?appid=$KEY&$CITY_PARAM&units=$UNITS")
+    weather=$(curl -x https://127.0.0.1:9050 -sf "$API/weather?appid=$KEY&$CITY_PARAM&units=$UNITS")
     [ "$weather" == "" ] && weather=$(curl -sf "$API/weather?appid=$KEY&$CITY_PARAM&units=$UNITS")
 else
     location=$(curl -sf https://location.services.mozilla.com/v1/geolocate?key=geoclue)
