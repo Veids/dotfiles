@@ -83,7 +83,7 @@ else
   " let g:floaterm_keymap_next   = '<leader>tn'
   let g:floaterm_position = "center"
   let g:floaterm_winblend = 12
-  let g:coc_global_extensions = ['coc-python', 'coc-snippets',  'coc-ultisnips', 'coc-json']
+  let g:coc_global_extensions = ['coc-python', 'coc-snippets',  'coc-ultisnips', 'coc-json', 'coc-cmake']
 
   "######################################
   "########## Plugin section ############
@@ -95,7 +95,6 @@ else
   Plug 'honza/vim-snippets'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
-  " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/vim-easy-align'
   Plug 'lambdalisue/suda.vim'
   Plug 'majutsushi/tagbar'
@@ -134,10 +133,13 @@ else
   Plug 'vim-airline/vim-airline-themes'
   let g:airline_theme='deus'
 
+  " let g:gitgutter_set_sign_backgrounds = 1
+  highlight SignColumn guibg=none
+
   "######################################
 
   call plug#end()
   colorscheme PaperColor
-  " hi Normal guibg=NONE ctermbg=NONE
+  highlight clear SignColumn
   call plug#end()
 endif

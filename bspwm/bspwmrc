@@ -68,8 +68,9 @@ setxkbmap -option grp:alt_shift_toggle us,ru
 # Shift-home, shift-end
 setxkbmap -option numpad:microsoft
 
-# Lock screen
+# Lock manager
 xidlehook \
+  --socket /tmp/xidlehook.sock \
   --not-when-fullscreen \
   --timer 90 \
     'echo $(xbacklight -get) > /tmp/xidlebacklight; xbacklight -set 1 -time 400 -fps 30' \
@@ -78,4 +79,5 @@ xidlehook \
     'qdbus org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases 2> /dev/null; i3lock-fancy' \
     'xbacklight -set $(cat /tmp/xidlebacklight) -time 400 -fps 30; rm /tmp/xidlebacklight' \
   --timer 3600 \
-  'xbacklight -set $(cat /tmp/xidlebacklight); systemctl suspend' '' &
+    'systemctl suspend' \
+    'xbacklight -set $(cat /tmp/xidlebacklight)' &
